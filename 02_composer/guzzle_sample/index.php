@@ -14,19 +14,19 @@ $username = trim($_GET['username'] ?? 'octocat');
 
 if ($username !== '') {
     // TODO: Guzzle クライアントを生成
-    // $client = new Client([
-    //     'base_uri' => 'https://api.github.com/',
-    //     'timeout'  => 5.0,
-    // ]);
+    $client = new Client([
+        'base_uri' => 'https://api.github.com/',
+        'timeout'  => 5.0,
+    ]);
 
     try {
         // TODO: GET https://api.github.com/users/{username}
-        // $response = $client->get("users/{$username}", [
-        //     'headers' => ['Accept' => 'application/vnd.github+json'],
-        // ]);
+        $response = $client->get("users/{$username}", [
+            'headers' => ['Accept' => 'application/vnd.github+json'],
+        ]);
 
         // TODO:レスポンスボディ(JSON)を連想配列にデコード
-        // $contents = $response->getBody()->getContents();
+        $contents = $response->getBody()->getContents();
         $user = json_decode($contents, true);
     } catch (GuzzleException $e) {
         // 404 やネットワークエラーなどをキャッチ
