@@ -37,3 +37,8 @@ $result = $writer->write($qrCode);
 header('Content-Type: ' . $result->getMimeType());
 // 出来上がった画像を文字列で出力
 echo $result->getString();
+
+// TODO: 画像をファイルに保存
+$domain = parse_url($text, PHP_URL_HOST);
+$file_name = $domain . '.png';
+$result->saveToFile('../images/' . $file_name);
