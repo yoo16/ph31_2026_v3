@@ -1,27 +1,36 @@
 <?php
+// POSTリクエストが送信されたかつファイルがアップロードされた場合
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['image'])) {
+    // アップロードされたファイルの一時パスを取得
     $file = $_FILES['image']['tmp_name'];
+    // 画像の荒さを取得（デフォルトは20ピクセル）
     $pixelSize = intval($_POST['pixel']) ?: 20;
 
     if (!file_exists($file)) {
         die('ファイルが見つかりません。');
     }
 
+    // 画像を読み込み、ピクセル化処理を行う
     $upload_file = file_get_contents($file);
+    // 文字列から画像リソースを作成
     $src = imagecreatefromstring($upload_file);
+    // 画像の幅と高さを取得
     $width = imagesx($src);
     $height = imagesy($src);
-
+    // ピクセル化のための小さい画像の幅と高さを計算
     $smallW = intval($width / $pixelSize);
     $smallH = intval($height / $pixelSize);
-
+    // 小さい画像を作成し、元の画像をリサイズしてコピー
     $small = imagecreatetruecolor($smallW, $smallH);
+    // 元の画像を小さい画像にリサイズしてコピー
     imagecopyresampled($small, $src, 0, 0, 0, 0, $smallW, $smallH, $width, $height);
-
+    // 小さい画像を元のサイズに戻してピクセル化
     $pixelated = imagecreatetruecolor($width, $height);
     imagecopyresized($pixelated, $small, 0, 0, 0, 0, $width, $height, $smallW, $smallH);
 
+    // image/png形式で出力
     header('Content-Type: image/png');
+    // 出力バッファをクリアしてから画像を出力
     imagepng($pixelated);
     exit;
 }
