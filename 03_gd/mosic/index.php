@@ -32,7 +32,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['image'])) {
     header('Content-Type: image/png');
     // 出力バッファをクリアしてから画像を出力
     imagepng($pixelated);
-    exit;
+
+    // 画像を保存する場合は以下のようにする
+    // imagepng($pixelated, '../images/mosic.png');
 }
 ?>
 
