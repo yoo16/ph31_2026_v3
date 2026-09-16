@@ -53,6 +53,7 @@ function submitToPhp(mode) {
     form.target = (mode === 'inline') ? '_blank' : '_self';
 
     // TODO: PHPに送信: output.php
+    form.submit()
 }
 
 // デリートキーで選択中の要素を削除
