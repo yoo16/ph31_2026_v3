@@ -1,5 +1,5 @@
 // TODO: キャンバスの初期化
-const canvas = null;
+const canvas = new fabric.Canvas('mainCanvas');
 
 // UI要素
 const fontSizeInput = document.getElementById('fontSizeInput');
@@ -10,15 +10,15 @@ const form = document.getElementById('exportForm');
 // テキスト追加関数
 function addText() {
     // TODO: Fabric.js を使ってテキストを追加
-    // const text = new fabric.IText('ここに入力', {
-    //     left: 100,
-    //     top: 100,
-    //     fontFamily: 'sans-serif',
-    //     fontSize: 40,
-    //     fill: '#333333'
-    // });
-    // canvas.add(text);
-    // canvas.setActiveObject(text);
+    const text = new fabric.IText('ここに入力', {
+        left: 100,
+        top: 100,
+        fontFamily: 'sans-serif',
+        fontSize: 40,
+        fill: '#333333'
+    });
+    canvas.add(text);
+    canvas.setActiveObject(text);
 }
 
 // 画像追加のハンドリング
