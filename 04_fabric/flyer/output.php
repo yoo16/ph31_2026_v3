@@ -84,10 +84,11 @@ function drawText($image, $obj, $config)
     list($r, $g, $b) = sscanf($obj['fill'], "#%02x%02x%02x");
     // TODO: GD 用の色情報に変換: imagecolorallocate で色を作成する
     // 引数: $image, $r, $g, $b
-    $color = null;
+    $color = imagecolorallocate($image, $r, $g, $b);
 
     // TODO: GD でテキストを描画: imagettftext を使用
     // 引数: $image, $size, $angle, $x, $y, $color, $fontPath, $obj['text']
+    imagettftext($image, $size, $angle, $x, $y, $color, $fontPath, $obj['text']);
 }
 
 function drawImage($image, $obj)
