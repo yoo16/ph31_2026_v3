@@ -61,6 +61,7 @@ window.addEventListener('keydown', (e) => {
     if (e.key === 'Delete' || e.key === 'Backspace') {
         if (canvas.getActiveObject() && !canvas.getActiveObject().isEditing) {
             // TODO: Fabric.js を使って選択中のオブジェクトを削除
+            canvas.remove(canvas.getActiveObject());
         }
     }
 });
@@ -89,7 +90,7 @@ fontSizeInput.addEventListener('input', () => {
     const obj = canvas.getActiveObject();
     if (obj) {
         // TODO: Fabric.js を使って選択中のオブジェクトのフォントサイズを変更
-        // obj.set('fontSize', parseInt(fontSizeInput.value));
+        obj.set('fontSize', parseInt(fontSizeInput.value));
         // 再レンダリング
         canvas.renderAll();
     }
@@ -101,7 +102,7 @@ colorInput.addEventListener('input', () => {
     const obj = canvas.getActiveObject();
     if (obj) {
         // TODO: Fabric.js を使って選択中のオブジェクトのカラーを変更
-        // obj.set('fill', colorInput.value);
+        obj.set('fill', colorInput.value);
 
         // 再レンダリング
         canvas.renderAll();
