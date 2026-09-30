@@ -11,7 +11,7 @@ $config = [
 ];
 
 // TODO: Mpdf のインスタンス化
-$mpdf = null;
+$mpdf = new Mpdf($config);
 
 // HTMLを書き込み
 $html = '
@@ -20,5 +20,7 @@ $html = '
 ';
 
 // TODO: HTMLの書き込み: WriteHTML()
+$mpdf->WriteHtml($html);
 
 // TODO: ブラウザに表示: Output() (I: Inline, D: Download)
+$mpdf->Output('sample.pdf', 'I');
