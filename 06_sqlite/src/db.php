@@ -16,7 +16,7 @@ try {
     $pdo = new PDO($schema);
 
     // エラーを例外として扱う
-    // $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     if ($newDb) {
         // 新規ファイルができたときにテーブルを初期化
@@ -39,4 +39,5 @@ function createTables()
             )";
 
     // TODO: SQL を実行: $pdo->exec() メソッドを使用
+    $pdo->exec($ddl);
 }
