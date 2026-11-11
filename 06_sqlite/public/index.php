@@ -3,11 +3,11 @@ require_once __DIR__ . "/../src/db.php";
 
 // 最新 20 件を取得
 // TODO: SELECT 文を書く: notices から全列を、created_at の新しい順に 20 件
-$sql = "";
+$sql = "SELECT * FROM notices ORDER BY created_at DESC LIMIT 20";
 // TODO: SQL を実行: query() メソッドを使用
-$stmt = null;
+$stmt = $pdo->query($sql);
 // TODO: 全行を連想配列で取得: fetchAll(PDO::FETCH_ASSOC)
-$posts = [];
+$posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <!DOCTYPE html>
 <html lang="ja">
