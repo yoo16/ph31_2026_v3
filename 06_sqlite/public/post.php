@@ -22,19 +22,19 @@ if (!is_dir($uploadDir)) {
 // 投稿処理
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // TODO: title と body を取得して trim(): $_POST['title'] ?? ""
-    $title = "";
-    $body  = "";
+    $title = trim($_POST['title'] ?? "");
+    $body  = trim($_POST['body'] ?? "");
     $imagePath = null;
 
     if (!empty($_FILES['image']['name'])) {
         // TODO: 元のファイル名から拡張子を小文字で取り出す: pathinfo() と PATHINFO_EXTENSION
-        $ext = "";
+        $ext = strtolower(pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION));
         $allowed = ['jpg','jpeg','png','gif'];
 
         if (in_array($ext, $allowed)) {
             // 元のファイル名は使わず、UUID でユニークな名前にする
             // TODO: 保存名を作る: uuidv4() . "." . $ext
-            $fileName = "";
+            $fileName = uuidv4() . "." . $ext;
             $targetFile = $uploadDir . $fileName;
 
             // TODO: 一時ファイルを uploads へ移動: move_uploaded_file($_FILES['image']['tmp_name'], $targetFile)
