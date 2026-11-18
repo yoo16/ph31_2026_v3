@@ -1,10 +1,10 @@
 <?php
-require __DIR__ . '/../vendor/autoload.php';
+require __DIR__ . '/../../vendor/autoload.php';
 
 // TODO: PHPMailer と Dotenv の名前空間をインポート
-// use PHPMailer\PHPMailer\PHPMailer;
-// use PHPMailer\PHPMailer\Exception;
-// use Dotenv\Dotenv;
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+use Dotenv\Dotenv;
 
 class Contact
 {
@@ -30,19 +30,19 @@ class Contact
 
         // クラスメンバに $_ENV の値を代入
         // TODO: 送信元アドレス MAIL_FROM_ADDRESS
-        $this->from_address = "";
+        $this->from_address = $_ENV['MAIL_FROM_ADDRESS'];
         // TODO: 送信元名前: MAIL_FROM_NAME
-        $this->from_name    = "";
+        $this->from_name    = $_ENV['MAIL_FROM_NAME'];
         // TODO: SMTPサーバー: MAIL_HOST
-        $this->host         = "";
+        $this->host         = $_ENV['MAIL_HOST'];
         // TODO: SMTPユーザー名: MAIL_USERNAME
-        $this->username     = "";
+        $this->username     = $_ENV['MAIL_USERNAME'];
         // TODO: SMTPパスワード: MAIL_PASSWORD
-        $this->password     = "";
+        $this->password     = $_ENV['MAIL_PASSWORD'];
         // TODO: 暗号化方式: MAIL_ENCRYPTION
-        $this->encryption   = "";
+        $this->encryption   = $_ENV['MAIL_ENCRYPTION'];
         // TODO: ポート番号: MAIL_PORT
-        $this->port         = 0;
+        $this->port         = $_ENV['MAIL_PORT'];
 
         $this->setupMailer();
     }
@@ -56,15 +56,15 @@ class Contact
         $this->mailer->isSMTP();
         $this->mailer->SMTPAuth   = true;
         // TODO: SMTPサーバーの設定
-        $this->mailer->Host       = "";
+        $this->mailer->Host       = $this->host;
         // TODO: SMTPユーザー名の設定
-        $this->mailer->Username   = "";
+        $this->mailer->Username   = $this->username;
         // TODO: SMTPパスワードの設定
-        $this->mailer->Password   = "";
+        $this->mailer->Password   = $this->password;
         // TODO: 暗号化方式の設定
-        $this->mailer->SMTPSecure = "";
+        $this->mailer->SMTPSecure = $this->encryption;
         // TODO: ポート番号の設定
-        $this->mailer->Port       = 0;
+        $this->mailer->Port       = $this->port;
         $this->mailer->CharSet    = 'UTF-8';
         $this->mailer->Encoding   = 'base64';
     }
@@ -111,16 +111,21 @@ class Contact
             ]);
 
             // TODO: 送信元アドレスと名前: setFrom(): from_address, from_name
+            $this->mailer->setFrom($this->from_address, $this->from_name);
             // TODO: 送信先アドレスと名前: addAddress(): email, name
+            $this->mailer->addAddress($email, $name);
             // TODO: 返信先アドレスと名前: addReplyTo(): from_address, from_name
+            $this->mailer->addReplyTo($this->from_address, $this->from_name);
             // TODO: HTML形式を有効に: isHTML(true)
+            $this->mailer->isHTML(true);
             // TODO: メールタイトル: Subject
-            $this->mailer->Subject = "";
+            $this->mailer->Subject = $this->subject;
             // TODO: メール本文: Body
-            $this->mailer->Body = "";
+            $this->mailer->Body = $html;
 
             // TODO: メール送信: send()
             // TODO: 送信成功したら true を返す
+            return $this->mailer->send();
         } catch (Exception $e) {
             return $this->mailer->ErrorInfo;
         }
